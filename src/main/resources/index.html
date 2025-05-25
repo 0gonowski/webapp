@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Klienci</title>
+</head>
+<body>
+<h1>Lista klientów</h1>
+<input type="text" id="search" placeholder="Szukaj klienta...">
+<ul id="klienci-lista"></ul>
+
+<script>
+    const searchInput = document.getElementById('search');
+    const lista = document.getElementById('klienci-lista');
+
+    async function loadKlienci(query = "") {
+        const url = query ? `/klienci/search?query=${query}` : '/klienci';
+        const res = await fetch(url);
+        const klienci = await res.json();
+
+        lista.innerHTML = "";
+        klienci.forEach(k => {
+            const li = document.createElement('li');
+            li.textContent = `${k.imie} ${k.nazwisko} – ${k.numerTelefonu}`;
+            lista.appendChild(li);
+        });
+    }
+
+    searchInput.addEventListener("input", (e) => {
+        loadKlienci(e.target.value);
+    });
+
+    loadKlienci(); // pierwsze wczytanie
+</script>
+</body>
+</html>

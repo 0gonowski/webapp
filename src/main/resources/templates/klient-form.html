@@ -1,0 +1,52 @@
+<!-- templates/klient-form.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <meta charset="UTF-8">
+  <title>Formularz klienta</title>
+</head>
+<body>
+<h1 th:text="${klient.id} != null ? 'Edytuj klienta' : 'Dodaj klienta'"></h1>
+
+<form th:action="${klient.id} != null ? @{'/klienci/edytuj/' + ${klient.id}} : @{/klienci/dodaj}" method="post">
+  <label>Imię:
+    <input type="text" name="imie" th:value="${klient.imie}" required>
+  </label>
+  <br>
+
+  <label>Nazwisko:
+    <input type="text" name="nazwisko" th:value="${klient.nazwisko}" required>
+  </label>
+  <br>
+
+  <label>Numer telefonu:
+    <input type="text" name="numerTelefonu" th:value="${klient.numerTelefonu}" required>
+  </label>
+  <br>
+
+  <label>Data urodzenia:
+    <input type="date" name="dataUrodzenia" th:value="${klient.dataUrodzenia}" required>
+  </label>
+  <br>
+
+  <label>Płeć:
+    <select name="plec">
+      <option value="M" th:selected="${klient.plec} == 'M'">Mężczyzna</option>
+      <option value="K" th:selected="${klient.plec} == 'K'">Kobieta</option>
+      <option value="N" th:selected="${klient.plec} == 'N'">Nie podano</option>
+    </select>
+  </label>
+  <br>
+
+  <label>Aktywny:
+    <input type="checkbox" name="aktywny" th:checked="${klient.aktywny}"/>
+  </label>
+  <br><br>
+
+  <button type="submit">Zapisz</button>
+  <a href="/klienci/lista"><button type="button">Anuluj</button></a>
+</form>
+
+</body>
+</html>

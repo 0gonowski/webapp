@@ -1,0 +1,62 @@
+<!-- templates/clients.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Lista klientów</title>
+</head>
+<body>
+<h1>Lista klientów</h1>
+
+<!-- Wyszukiwarka -->
+<form action="/klienci/szukaj" method="get">
+    <input type="text" name="q" placeholder="Szukaj po imieniu/nazwisku/telefonie">
+    <button type="submit">Szukaj</button>
+</form>
+<br>
+
+<!-- Przycisk dodawania nowego klienta -->
+<a href="/klienci/nowy">
+    <button>Dodaj klienta</button>
+</a>
+<br><br>
+
+<!-- Tabela klientów -->
+<table border="1">
+    <thead>
+    <tr>
+        <th><a href="/klienci/lista?sort=imie">Imię</a></th>
+        <th><a href="/klienci/lista?sort=nazwisko">Nazwisko</a></th>
+        <th>Telefon</th>
+        <th><a href="/klienci/lista?sort=data">Data urodzenia</a></th>
+        <th>Płeć</th>
+        <th><a href="/klienci/lista?sort=aktywny">Aktywny</a></th>
+        <th>Data dodania</th>
+        <th>Akcje</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="klient : ${klienci}">
+        <td th:text="${klient.imie}"></td>
+        <td th:text="${klient.nazwisko}"></td>
+        <td th:text="${klient.numerTelefonu}"></td>
+        <td th:text="${klient.dataUrodzenia}"></td>
+        <td th:text="${klient.plec}"></td>
+        <td th:text="${klient.aktywny}"></td>
+        <td th:text="${klient.dataDodania}"></td>
+        <td>
+            <a th:href="@{'/klienci/edytuj/' + ${klient.id}}">
+                <button>Edytuj</button>
+            </a>
+            <a th:href="@{'/klienci/usun/' + ${klient.id}}" onclick="return confirm('Na pewno usunąć?');">
+                <button>Usuń</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
